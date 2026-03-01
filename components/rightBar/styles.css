@@ -1,0 +1,70 @@
+.rightbar__container.active {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    opacity: .7;
+    background-color: #000;
+}
+
+.rightbar {
+    position: absolute;
+    z-index: 15;
+    width: 300px;
+    right: -300px;
+    top: 100px;
+    padding: 15px;
+    color: #fff;
+    background: linear-gradient(180deg, #000, #fff);
+    background-size: 300% 300%;
+    background-position: -100%;
+    height: calc(100vh - 100px);
+}
+
+
+.rightbar.active {
+    animation: RightbarMoveOut .25s ease-in-out forwards ;
+}
+
+.rightbar__menu{
+    display: grid;
+    row-gap: 15px;
+    cursor: pointer;
+}
+
+.user__info {
+    display: flex;
+    align-items: center;
+    position: relative;
+    column-gap: 15px;
+    font-weight: bold;
+    padding: 25px;
+}
+
+.user__info::after {
+    position: absolute;
+    bottom: -5px;
+    content: '';
+    height: 1px;
+    width: 300px;
+    left: -15px;
+    background-color: #000;
+}
+
+.rightbar__item {
+    display: flex;
+    column-gap: 10px;
+    font-weight: 700;
+}
+
+
+@keyframes RightbarMoveOut {
+    0% {
+        opacity: 0;
+        right: -300px;
+    }
+    100% {
+        opacity: 1;
+        right: 0px;
+    }
+}
+

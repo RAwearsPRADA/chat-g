@@ -1,0 +1,107 @@
+.chatbox__container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(100vw - 300px);
+    height: calc(100vh - 100px);
+    top: 100px;
+    left: 300px;
+}
+
+.chatbox__header {
+    padding: 15px;
+    width: 100%;
+    background-color: rgba(256, 256, 256, 0.1);
+}
+
+.chatbox__messages-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    width: 100%;
+    height: calc(100% - 100px);
+    padding: 15px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+    width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+    background:rgb(136, 136, 136);
+    border-radius: 3px;
+    }
+}
+
+.chatbox__input-field {
+    display: flex;
+    column-gap: 15px;
+    align-items: center;
+    padding-block: 5px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    justify-content: center;
+    width: 90%;
+    background-color: #535353;
+}
+
+.chatbox__input-field > input {
+    width: 80%;
+    padding: 7.5px;
+    background-color: #2e2e2e;
+    border-radius: 15px;
+}
+
+.chat__message {
+    display: inline-flex;
+    column-gap: 5px;
+    align-items: center;
+    border-radius: 25%;
+}
+
+
+.message__text {
+    background-color: #2e2e2e;
+    border-radius: 10px;
+    padding: 5px;
+    padding-inline: 8px;
+}
+.message__date{
+    font-size: 10px;
+}
+.message__text.self {
+    background-color: #2f2f3f;
+}
+.send__message-btn {
+    padding: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.send__message-btn.active {
+    animation: BtnAnimation 2s ease-in forwards infinite;
+}
+
+.message__sender {
+    font-size: 14px;
+}
+
+.same-sender__message {
+    margin-top: -8px;
+}
+.member__last-activity {
+    color: #9b9b9b;
+    font-size: 12px;
+}
+
+@keyframes BtnAnimation {
+    0% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: rgba(256, 256, 256, 0.5);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
