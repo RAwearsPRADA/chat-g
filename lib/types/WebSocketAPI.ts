@@ -12,6 +12,12 @@ export interface IWebSocketAPI {
         onlineUsers?: Record<keyof IUser, ObjectValue>[] | SetObject[]
         isTyping?: boolean,
         messageTarget?: number
-        message?: string
+        message?: {
+            content: string,
+            conversationId: number,
+            createdAt: string,
+            isRead: boolean,
+            senderId: number
+        }
     }
 }

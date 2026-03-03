@@ -7,7 +7,7 @@ import type { Message } from '@/app/generated/prisma/client';
 interface ChatContextType {
   savedChats: ISavedChat[];
   setSavedChats: Dispatch<SetStateAction<ISavedChat[]>>;
-  updateChatLastMessage: (message: Message) => void;
+  updateChatLastMessage: (message: Omit<Message, 'id'>) => void;
   incrementUnread?: (chatId: string) => void;
   updateChatList: () => void;
 }
@@ -25,6 +25,7 @@ export function ChatProvider({ children }: { children: ReactNode}) {
     useEffect(() => {
       getSavedChats().then((data: {savedChats: ISavedChat[], self: string}) => {
                   const savedChats = data.savedChats
+                  console.log(savedChats)
                   savedChats.forEach(chat => {{
                       if (chat.type === 'private') { 
                           chat.participants = chat.participants.filter(member => member.user.nick !== data.self)
@@ -42,7 +43,8 @@ export function ChatProvider({ children }: { children: ReactNode}) {
               chat.participants = chat.participants.filter(member => member.user.nick !== data.self)
           }}
       })
-      setSavedChats(data.savedChats)
+      setSavedChats(prev => {
+        return [...prev, ...data.savedChats]})
       })
     }
 

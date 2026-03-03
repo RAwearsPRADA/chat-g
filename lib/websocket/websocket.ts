@@ -20,7 +20,7 @@ export interface IData {
         onlineUsers?: Record<keyof IUser, ObjectValue> | SetObject[]
         isTyping?: boolean,
         messageTarget?: number,
-        message?: Omit<Message, 'createdAt' | 'id'>
+        message?: Omit<Message, 'id'>
     }
 }
 

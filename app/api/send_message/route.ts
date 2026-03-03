@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
         data: {
             content: message.content,
             conversationId: message.conversationId,
-            senderId: message.sender.id,
+            senderId: message.senderId,
             isRead: false
         },
 

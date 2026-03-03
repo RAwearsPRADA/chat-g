@@ -3,11 +3,17 @@ import { createContext, type Dispatch, type ReactNode, type SetStateAction, useC
 import type { Conversation, Message, User } from "@/app/generated/prisma/client";
 
 interface IChatboxState {
-    chatboxState: User | Conversation,
-    chatHistory: Message[],
-    setChatHistory: Dispatch<SetStateAction<Message[]>>,
+    chatboxState: User | Conversation | undefined,
     switchChatboxState: (item: User | Conversation) => void,
-    chatId: number
+    chatId: number,
+    chatsCache: IChatsCache[],
+    setChatsCache: Dispatch<SetStateAction<IChatsCache[]>>
+}
+
+interface IChatsCache {
+    chatId: number,
+    userNick?: string,
+    chatHistory: Omit<Message, 'id'>[]
 }
 
 const getPrivateChatHistory = async (item: User | Conversation): Promise<{generalChat: {messages: Message[]}, chatId: number}> =>
@@ -30,23 +36,30 @@ const ChatboxContext = createContext<IChatboxState | null>(null)
 export function ChatboxProvider({children}: {children: ReactNode}) {
     const [chatboxState, setChatboxState] = useState<User | Conversation>()
     const [chatId, setChatId] = useState<number>(0)
-    const [chatHistory, setChatHistory] = useState<Message[]>([])
-    const [chatsCache, setChatsCache] = useState<{chatId: number, chatHistory: Message[]}[]>([])
+    const [chatsCache, setChatsCache] = useState<IChatsCache[]>([])
     const switchChatboxState = (item: User | Conversation): void => {
         if ('nick' in item) {
-            setChatboxState(item)
+            if (!chatboxState) setChatboxState(item)
+            else {
+                if ('nick' in chatboxState && chatboxState.nick !== item.nick) 
+                    setChatboxState(item)
+            }
+            if (!chatsCache.find(chat => chat.userNick === item.nick))
             getPrivateChatHistory(item).then(data => {
                 setChatId(data.chatId)
-                setChatsCache(prev => [...prev, {chatId: data.chatId, chatHistory: data.generalChat.messages}])
-                setChatHistory(data.generalChat.messages.reverse())
+                setChatsCache(prev => [...prev, {chatId: data.chatId, userNick: item.nick, chatHistory: [...data.generalChat.messages].reverse()}])
             })
+            else {
+                const chat = chatsCache.find(chat => chat.userNick === item.nick)
+                setChatId(chat!.chatId)
+            }
         }
         else {
             console.log('Доработать баля') //finish it
         }
     }    
         return (<>
-            <ChatboxContext.Provider value={{chatboxState: chatboxState!, switchChatboxState, chatHistory, setChatHistory, chatId, }}>
+            <ChatboxContext.Provider value={{chatboxState: chatboxState, switchChatboxState, chatId, chatsCache, setChatsCache}}>
                 {children}
             </ChatboxContext.Provider>
         </>)

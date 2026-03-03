@@ -51,7 +51,7 @@ export interface ISavedChat {
         createdAt: string;
         updatedAt: string;
     },
-    messages: Message[];
+    messages: Omit<Message, 'id'>[];
     userId: number;
 }
 

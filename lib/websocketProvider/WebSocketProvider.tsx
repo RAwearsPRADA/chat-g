@@ -3,9 +3,9 @@
 import { IWebSocketAPI } from "../types/WebSocketAPI"
 import { IUser } from "../types/WebSocketUser"
 import { ws } from "../websocket/websocket"
-import { ReactNode, useEffect, useState, createContext, Dispatch, useContext } from "react"
+import { ReactNode, useEffect, useState, createContext, Dispatch, useContext, useRef } from "react"
 import { useChats } from "../savedChatContext"
-import { Message } from "@/app/generated/prisma/client"
+import { useChatbox } from "@/components/chatBox/chatBoxContext"
 
 
 interface IWebSocketContext {
@@ -19,7 +19,16 @@ const WebSocketContext = createContext<IWebSocketContext | null>(null)
 
 export function WebSocketProvider({children} : {children: ReactNode}) {
     const [onlineUsers, setOnlineUsers] = useState<IUser[]>([])
-    const {updateChatLastMessage, savedChats, setSavedChats} = useChats()
+    const {setSavedChats} = useChats()
+    const {setChatsCache, chatsCache} = useChatbox()
+
+    const savedChatsSetter = useRef(setSavedChats);
+    const chatsCacheSetter = useRef(setChatsCache);
+
+    useEffect(() => {
+        savedChatsSetter.current = setSavedChats;
+        chatsCacheSetter.current = setChatsCache;
+    });
 
     useEffect(() => {
         ws.connect()
@@ -34,15 +43,23 @@ export function WebSocketProvider({children} : {children: ReactNode}) {
                 setSavedChats(prev => {
                     const chatIndex = prev.findIndex(chat => chat.id === message.data.messageTarget)
                     const updated = [...prev]
-                    console.log(message.data)
-                    updated[chatIndex] = {...prev[chatIndex], messages: [(message.data.message as Message)]}
+                    updated[chatIndex] = {...prev[chatIndex], messages:[{...message.data!.message!, createdAt: new Date(message.data!.message!.createdAt)}]}
                     return [...updated]
                 })
-                //if (savedChats.find(chat => chat.id === message.data!.messageTarget!))
-                //    updateChatLastMessage((message.data.message as unknown as Message))
-                //else {
-                //    setSavedChats(prev => [...prev, {id: message.data.messageTarget, messages: [], type: 'private'}])
-                //}
+                setChatsCache(prev => {
+                    if (prev.length) {
+                        const index = prev.findIndex(chat => chat.chatId === message.data.message!.conversationId)
+                        const updated = [...prev]
+                        if (index === -1) return prev
+                        if (updated[index].chatId) {
+                            updated[index] = {...prev[index], chatHistory: [...prev[index].chatHistory, {...message.data!.message!, createdAt: new Date(message.data.message!.createdAt)}]}
+                        }
+                        return updated
+                    }
+                    else {
+                        return prev
+                    }
+                })
             }
     })
         

@@ -24,19 +24,19 @@ export default async function Profile({token}: {token: {nick: string, email: str
     return (
   <>
   <ChatProvider>
-    <WebSocketProvider> 
-        <SidebarProvider> 
-            <ChatboxProvider>
-                <ProfileProvider>
-                    <Header/>
-                    <Sidebar self={selfInfo}/>
-                    <Rightbar self={selfInfo}/>
-                    <Chatbox self={selfInfo}/> 
-                    <UserProfile user={selfInfo}/>
-                </ProfileProvider>
-            </ChatboxProvider>
-        </SidebarProvider>
-    </WebSocketProvider> 
+    <ChatboxProvider>
+          <WebSocketProvider> 
+              <SidebarProvider> 
+                      <ProfileProvider>
+                          <Header/>
+                          <Sidebar self={selfInfo}/>
+                          <Rightbar self={selfInfo}/>
+                          <Chatbox self={selfInfo}/> 
+                          <UserProfile user={selfInfo}/>
+                      </ProfileProvider>
+              </SidebarProvider>
+          </WebSocketProvider> 
+    </ChatboxProvider>
   </ChatProvider>
   </>
 )
