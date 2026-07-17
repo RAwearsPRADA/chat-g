@@ -1,0 +1,129 @@
+aside.sidebar {
+    width: 300px;
+    padding: 15px;
+    height: calc(100vh - 100px);
+    background-color: rgba(49, 49, 49, .2);
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+    width: 3px;
+    }
+    &::-webkit-scrollbar-thumb {
+    background:rgb(136, 136, 136);
+    border-radius: 3px;
+    }
+}
+
+.sidebar__inner {
+    display: grid;
+    row-gap: 15px;
+}
+
+.search__field > input{
+    border: solid 2px #0e0000;
+    padding: 3px;
+    padding-inline: 10px;
+    border-radius: 15px;
+    background-color: rgb(102, 102, 102, .2);
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.chats__inner {
+    display: grid;
+    row-gap: 5px;
+    overflow: hidden;
+}
+
+.chat__item, .saved__chat {
+    display: flex;
+    column-gap: 5px;
+    cursor: pointer;
+    transition-duration: .5s;
+    padding-block: 5px;
+}
+
+.chat__item:hover, .saved__chat:hover {
+    background-color: #0e0000;
+}
+
+.chat__item-container {
+    display: grid;
+}
+
+.user__name {
+    font-weight: 650;
+}
+.user__avatar {
+    width: auto;
+}
+
+.avatar__inner {
+    position: relative;
+}
+
+.last__message-text {
+    width: 100px;
+}
+
+.avatar__inner.online::after {
+    display: block;
+    position: absolute;
+    content: '';
+    aspect-ratio: 1;
+    right: 5px;
+    bottom: 5px;
+    width: 10px;
+    border-radius: 50%;
+    background: linear-gradient(#5eff74, #064b00);
+    
+}
+
+
+.last__message {
+    color: #838383;
+}
+
+.user__typing {
+    display: flex;
+    column-gap: 5px;
+    color: #afb5ff;
+    font-size: 12px;
+}
+
+.user__typing > ul {
+    display: flex;
+    column-gap: 2px;
+    align-self: center;
+}
+
+.user__typing > ul li {
+    position: relative;
+    width: 3.5px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: #6790ff;
+    animation: TypingAnimation 0.5s ease infinite;
+}
+
+.unread__messages {
+    aspect-ratio: 1;
+    padding: 5px;
+    color: #000;
+    background-color: #6790ff;
+    border-radius: 50%;
+}
+
+@keyframes TypingAnimation {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
