@@ -27,13 +27,13 @@ export function useSendMessage(chatId: number, self: User | null) {
         })
     clearTypingTimer()
     setCurrentTypingStatus(false)
-    fetch('/api/send_message', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-            message
-        })
-    }).catch(err => console.error("Save error", err)).then(() => {})
+    //fetch('/api/send_message', {
+    //    method: 'POST',
+    //    headers: { 'Content-Type': 'application/json' },
+    //    body: JSON.stringify({ 
+    //        message
+    //    })
+    //}).catch(err => console.error("Save error", err)).then(() => {})
     if (!isFirstMessage) {
         addMessageToCache(message)
     } 

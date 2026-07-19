@@ -44,6 +44,7 @@ struct WsRequest {
 struct WsRequestData {
     #[serde(rename = "messageTarget")]
     message_target: Option<u64>,
+    message: Option<message_queue_worker::Message>,
     user: Option<UserField>,
     nick: Option<String>,
     #[serde(rename = "lastMessageTimestamp")]
@@ -91,8 +92,13 @@ async fn main() {
     println!("✅ REDIS successfully connected");
 
     let worker_config = config.clone();
+    let worker_config2 = config.clone();
+
     tokio::spawn(async move {
         worker::start_chat_read_worker(worker_config).await;
+    });
+    tokio::spawn(async move {
+        message_queue_worker::start_message_queue_worker(worker_config2).await;
     });
 
     let ws_secret = std::env::var("WS_SECRET").expect("WS_SECRET must be set");
@@ -231,6 +237,11 @@ async fn handle_socket(socket: WebSocket, state: Arc<AppState>, nick: String, us
                 if req.r#type == "new message" {
                     if let Some(ref u) = req.data.user {
                         if u.nick != nick_clone { continue; }
+                        if let Some(ref msg) = req.data.message {
+                            let message_to_string = serde_json::to_string(msg).unwrap();
+                            let _: Result<i64, _> = 
+                            redis_recv_clone.lpush("queue:messages", &message_to_string).await;
+                        } else { continue; }
                     } else { continue; }
                 }
                 if let Some(ref n) = req.data.nick {
@@ -243,6 +254,9 @@ async fn handle_socket(socket: WebSocket, state: Arc<AppState>, nick: String, us
                 {
                     publish_to_room(&state_clone, target_chat, text, Some(&tx_clone));
                 }
+            }
+            else if let Err(e) = serde_json::from_str::<WsRequest>(&text){
+                println!("{}", e)
             }
         }
     });
