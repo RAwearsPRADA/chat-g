@@ -24,7 +24,6 @@ pub enum MessageType {
     FORWARDED
 }
 
-// Реализуем перевод энума в &str для sqlx вручную (это нулевая стоимость, работает мгновенно)
 impl MessageType {
     pub fn as_str(&self) -> &'static str {
         match self {
@@ -155,7 +154,7 @@ impl MessageQueueWorker {
             .await
             .map_err(|e| e.to_string())?;
 
-        println!("🎰 Общая команда выполнена! Записано и обновлено: {} шт.", inserted_len);
+        println!("🎰 [INFO] Successfully bulk-updated {} participants in Postgres!", inserted_len);
         Ok(inserted_len)
     }
 
