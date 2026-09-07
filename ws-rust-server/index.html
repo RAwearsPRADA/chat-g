@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<!-- before you complain, nginx autoindex with headers/footers does not make it easy to produce compliant HTML... -->
+<html>
+<head>
+<!-- the title was changed for length (twice!) because Google increased results page font size and truncated it -->
+<title>musl libc toolchains | static cross/native toolchains</title>
+<meta name="description" content="musl.cc provides static cross- and native- musl-based toolchains for Linux, Windows, and macOS, targeting architectures like ARM, MIPS, PowerPC, RISC-V, S/390, and more.">
+<style>
+/* toolchains have no style, come on. */
+</style>
+</head>
+
+<h2>
+Your source for static cross- and native- <em>musl-based</em> toolchains.
+</h2>
+
+<em>This is a community website and is not officially endorsed by musl or its authors.</em><br />
+
+<h3>
+toolchains&nbsp;(
+<a href="#binaries">linux</a>,
+<a href="//win.musl.cc">windows</a>,
+<a href="//mac.musl.cc">mac</a>,
+<a href="//sun.musl.cc">solaris</a>,
+<a href="https://hub.docker.com/r/muslcc/i686/tags/">docker</a>,
+<a href="#sources">sources</a>,
+<a href="//more.musl.cc/">more...</a>&nbsp;)
+<br/>
+<!--xstatic&nbsp;(
+<a href="https://xstatic.zv.io/">distro</a>,
+<a href="//krn.musl.cc/">kernel</a>,
+<a href="//pkg.musl.cc/">packages</a>,
+<a href="//src.musl.cc/">sources</a>&nbsp;)
+<br/>-->
+meta&nbsp;(
+<a href="//conf.musl.cc">config</a>,
+<a href="//changelog.musl.cc/">changelog</a>,
+<a href="//matrix.musl.cc/">matrix</a>&nbsp;)
+<br/>
+links&nbsp;(
+<a href="https://musl.libc.org/">musl</a>,
+<a href="https://mingw-w64.org/">mingw</a>,
+<a href="https://riscv.org/">risc-v</a>&nbsp;)
+<br/>
+</h3>
+
+<p><strong>2025-05-27: GitHub Actions has been blocked wholesale due to <a href="https://github.com/orgs/community/discussions/27906#discussioncomment-3332440">abuse similar to this</a>.</strong></p>
+
+<p>
+Small and reliable pre-built GCC toolchains<a href="#refs"><sup>4</sup></a> for many architectures.<br/>
+Cross (<strong>i686-hosted</strong>) by default. Native for completeness.<br/>
+Static so they run on supported platforms without dependencies.
+</p>
+
+<p>
+This site is <em>curl-friendly</em> for <strong>direct links</strong> to toolchains!
+<pre>
+  $ curl -s musl.cc | grep mips
+  https://musl.cc/mips-linux-musl-cross.tgz
+  ...
+</pre>
+</p>
+
+<p>
+Toolchains are built<a href="#refs"><sup>1</sup></a> using several modified versions (see below) of
+<a href="https://github.com/richfelker/musl-cross-make"><em>musl-cross-make</em></a>.<br/>
+<br/>
+For your convenience, Docker images<a href="#refs"><sup>2</sup></a> are provided and updated regularly:
+<pre>
+  $ docker pull muslcc/i686:aarch64-linux-musl
+</pre>
+</p>
+
+<p>
+Many thanks to others in the <code>#musl</code> and associated communities for making this site possible.<br/>
+In particular,
+<a href="https://landley.net/">Rob Landley</a>,
+<a href="https://skarnet.org/">Laurent Bercot (skarnet)</a>, and of course
+<a href="https://www.etalabs.net/">Rich Felker (dalias)</a>.
+</p>
+
+<p>
+<a id="sources"></a>
+<strong>Ingredients</strong>:
+<ul>
+<li><a href="https://git.musl-libc.org/cgit/musl/log/">musl</a>: <strong>git-b76f37f (2021-09-23)</strong></li>
+<li><a href="https://ftp.gnu.org/gnu/gcc/">GCC</a>: <strong>11.2.1 (Snapshot 11-20211120)</strong></li>
+<li><a href="https://ftp.gnu.org/gnu/binutils/">binutils</a>: <strong>2.37</strong></li>
+<li><a href="https://ftp.gnu.org/gnu/gmp/">GMP</a>: <strong>6.2.1</strong></li>
+<li><a href="https://ftp.gnu.org/gnu/mpfr/">MPFR</a>: <strong>4.1.0</strong></li>
+<li><a href="https://ftp.gnu.org/gnu/mpc/">MPC</a>: <strong>1.2.1</strong></li>
+<li><a href="https://www.kernel.org/">Linux</a>: <strong>5.15.2</strong></li>
+<li><a href="https://sourceforge.net/p/mingw-w64/mingw-w64/ci/master/tree/">MinGW-w64</a>: <strong>git-6cc9777 (2021-11-19)</strong></li>
+</ul>
+[ Standard:
+<a href="https://git.zv.io/toolchains/musl-cross-make">source</a>/<a href="//conf.musl.cc/plain_20211122_11-2-1.txt"><code>config.mak</code></a>
+]<br/>
+[ MinGW:
+<a href="https://git.zv.io/toolchains/mingw-cross-make">source</a>/<a href="//conf.musl.cc/mingw_20211122_11-2-1_win32.txt"><code>config.mak</code></a>
+]<br/>
+</p>
+
+<p>
+<a id="binaries"></a>
+<strong>Toolchains</strong>:
+<br/><br/>
+Toolchains support the following languages:
+<strong>C</strong>,
+<strong>C++</strong>,
+<strong>Fortran</strong>
+except where noted<a href="#issues"><sup>a</sup></a>.<br/>
+They are cryptographically signed with the following key:
+<strong><code>0xB1D0B4566FBBDB40</code></strong>
+</p>
+
+<p>
+GCC major releases:&nbsp;(
+<a href="//more.musl.cc/5"><strong>5</strong></a>,
+<a href="//more.musl.cc/6"><strong>6</strong></a>,
+<a href="//more.musl.cc/7"><strong>7</strong></a>,
+<a href="//more.musl.cc/8"><strong>8</strong></a>,
+<a href="//more.musl.cc/9"><strong>9</strong></a>,
+<a href="//more.musl.cc/10"><strong>10</strong></a>,
+<a href="//more.musl.cc/11"><strong>11</strong></a>&nbsp;). <strong>**Other toolchains are being rebuilt now after disk failure!**</strong>
+<br/>
+For <strong>non</strong>-i686 toolchains, <a href="//more.musl.cc/">click here</a>.
+Something else? <a href="https://zv.io/contact">Contact me</a>.
+</p>
+<html>
+<head><title>Index of /</title></head>
+<body>
+<h1>Index of /</h1><hr><pre><a href="../">../</a>
+<a href="SHA512SUMS">SHA512SUMS</a>                                         06-Feb-2023 19:45               17033
+<a href="aarch64-linux-musl-cross.tgz">aarch64-linux-musl-cross.tgz</a>                       23-Nov-2021 04:34           108096828
+<a href="aarch64-linux-musl-native.tgz">aarch64-linux-musl-native.tgz</a>                      23-Nov-2021 04:43            85323901
+<a href="aarch64_be-linux-musl-cross.tgz">aarch64_be-linux-musl-cross.tgz</a>                    23-Nov-2021 04:34           109388665
+<a href="aarch64_be-linux-musl-native.tgz">aarch64_be-linux-musl-native.tgz</a>                   23-Nov-2021 04:43            86177030
+<a href="arm-linux-musleabi-cross.tgz">arm-linux-musleabi-cross.tgz</a>                       23-Nov-2021 04:34           102611361
+<a href="arm-linux-musleabi-native.tgz">arm-linux-musleabi-native.tgz</a>                      23-Nov-2021 04:44            78803789
+<a href="arm-linux-musleabihf-cross.tgz">arm-linux-musleabihf-cross.tgz</a>                     23-Nov-2021 04:34           102391022
+<a href="arm-linux-musleabihf-native.tgz">arm-linux-musleabihf-native.tgz</a>                    23-Nov-2021 04:44            78565379
+<a href="armeb-linux-musleabi-cross.tgz">armeb-linux-musleabi-cross.tgz</a>                     23-Nov-2021 04:34           103654098
+<a href="armeb-linux-musleabi-native.tgz">armeb-linux-musleabi-native.tgz</a>                    23-Nov-2021 04:44            79166263
+<a href="armeb-linux-musleabihf-cross.tgz">armeb-linux-musleabihf-cross.tgz</a>                   23-Nov-2021 04:34           103429878
+<a href="armeb-linux-musleabihf-native.tgz">armeb-linux-musleabihf-native.tgz</a>                  23-Nov-2021 04:44            78858753
+<a href="armel-linux-musleabi-cross.tgz">armel-linux-musleabi-cross.tgz</a>                     23-Nov-2021 04:34           102614527
+<a href="armel-linux-musleabi-native.tgz">armel-linux-musleabi-native.tgz</a>                    23-Nov-2021 04:44            78807653
+<a href="armel-linux-musleabihf-cross.tgz">armel-linux-musleabihf-cross.tgz</a>                   23-Nov-2021 04:35           102399957
+<a href="armel-linux-musleabihf-native.tgz">armel-linux-musleabihf-native.tgz</a>                  23-Nov-2021 04:44            78573749
+<a href="armv5l-linux-musleabi-cross.tgz">armv5l-linux-musleabi-cross.tgz</a>                    23-Nov-2021 04:35           102623662
+<a href="armv5l-linux-musleabi-native.tgz">armv5l-linux-musleabi-native.tgz</a>                   23-Nov-2021 04:44            78815373
+<a href="armv5l-linux-musleabihf-cross.tgz">armv5l-linux-musleabihf-cross.tgz</a>                  23-Nov-2021 04:35           102404677
+<a href="armv5l-linux-musleabihf-native.tgz">armv5l-linux-musleabihf-native.tgz</a>                 23-Nov-2021 04:45            78564768
+<a href="armv6-linux-musleabi-cross.tgz">armv6-linux-musleabi-cross.tgz</a>                     23-Nov-2021 04:35           102626420
+<a href="armv6-linux-musleabi-native.tgz">armv6-linux-musleabi-native.tgz</a>                    23-Nov-2021 04:45            78791413
+<a href="armv6-linux-musleabihf-cross.tgz">armv6-linux-musleabihf-cross.tgz</a>                   23-Nov-2021 04:35           102401216
+<a href="armv6-linux-musleabihf-native.tgz">armv6-linux-musleabihf-native.tgz</a>                  23-Nov-2021 04:45            78574645
+<a href="armv7l-linux-musleabihf-cross.tgz">armv7l-linux-musleabihf-cross.tgz</a>                  23-Nov-2021 04:35           102402461
+<a href="armv7l-linux-musleabihf-native.tgz">armv7l-linux-musleabihf-native.tgz</a>                 23-Nov-2021 04:45            78569942
+<a href="armv7m-linux-musleabi-cross.tgz">armv7m-linux-musleabi-cross.tgz</a>                    23-Nov-2021 04:36           102619580
+<a href="armv7m-linux-musleabi-native.tgz">armv7m-linux-musleabi-native.tgz</a>                   23-Nov-2021 04:45            78798631
+<a href="armv7r-linux-musleabihf-cross.tgz">armv7r-linux-musleabihf-cross.tgz</a>                  23-Nov-2021 04:36           102412649
+<a href="armv7r-linux-musleabihf-native.tgz">armv7r-linux-musleabihf-native.tgz</a>                 23-Nov-2021 04:45            78566914
+<a href="i486-linux-musl-cross.tgz">i486-linux-musl-cross.tgz</a>                          23-Nov-2021 04:36           110230922
+<a href="i486-linux-musl-native.tgz">i486-linux-musl-native.tgz</a>                         23-Nov-2021 04:45            90828057
+<a href="i686-linux-musl-cross.tgz">i686-linux-musl-cross.tgz</a>                          23-Nov-2021 04:36           110615829
+<a href="i686-linux-musl-native.tgz">i686-linux-musl-native.tgz</a>                         23-Nov-2021 04:45            91352982
+<a href="i686-w64-mingw32-cross.tgz">i686-w64-mingw32-cross.tgz</a>                         06-Feb-2023 19:39           118748431
+<a href="i686-w64-mingw32-native.zip">i686-w64-mingw32-native.zip</a>                        06-Feb-2023 19:40           100867674
+<a href="m68k-linux-musl-cross.tgz">m68k-linux-musl-cross.tgz</a>                          23-Nov-2021 04:37            88772176
+<a href="m68k-linux-musl-native.tgz">m68k-linux-musl-native.tgz</a>                         23-Nov-2021 04:46            66758725
+<a href="microblaze-linux-musl-cross.tgz">microblaze-linux-musl-cross.tgz</a>                    23-Nov-2021 04:37            77139446
+<a href="microblaze-linux-musl-native.tgz">microblaze-linux-musl-native.tgz</a>                   23-Nov-2021 04:46            65199179
+<a href="microblazeel-linux-musl-cross.tgz">microblazeel-linux-musl-cross.tgz</a>                  23-Nov-2021 04:37            76421572
+<a href="microblazeel-linux-musl-native.tgz">microblazeel-linux-musl-native.tgz</a>                 23-Nov-2021 04:46            65037724
+<a href="mips-linux-musl-cross.tgz">mips-linux-musl-cross.tgz</a>                          23-Nov-2021 04:37           102663387
+<a href="mips-linux-musl-native.tgz">mips-linux-musl-native.tgz</a>                         23-Nov-2021 04:46            89969825
+<a href="mips-linux-musln32sf-cross.tgz">mips-linux-musln32sf-cross.tgz</a>                     23-Nov-2021 04:37           102995683
+<a href="mips-linux-musln32sf-native.tgz">mips-linux-musln32sf-native.tgz</a>                    23-Nov-2021 04:46            90507774
+<a href="mips-linux-muslsf-cross.tgz">mips-linux-muslsf-cross.tgz</a>                        23-Nov-2021 04:37           102993400
+<a href="mips-linux-muslsf-native.tgz">mips-linux-muslsf-native.tgz</a>                       23-Nov-2021 04:46            90507040
+<a href="mips64-linux-musl-cross.tgz">mips64-linux-musl-cross.tgz</a>                        23-Nov-2021 04:37           105099504
+<a href="mips64-linux-musl-native.tgz">mips64-linux-musl-native.tgz</a>                       23-Nov-2021 04:47            89310656
+<a href="mips64-linux-musln32-cross.tgz">mips64-linux-musln32-cross.tgz</a>                     23-Nov-2021 04:38           103528668
+<a href="mips64-linux-musln32-native.tgz">mips64-linux-musln32-native.tgz</a>                    23-Nov-2021 04:47            85676614
+<a href="mips64-linux-musln32sf-cross.tgz">mips64-linux-musln32sf-cross.tgz</a>                   23-Nov-2021 04:38           103730323
+<a href="mips64-linux-musln32sf-native.tgz">mips64-linux-musln32sf-native.tgz</a>                  23-Nov-2021 04:47            85835622
+<a href="mips64el-linux-musl-cross.tgz">mips64el-linux-musl-cross.tgz</a>                      23-Nov-2021 04:38           103773398
+<a href="mips64el-linux-musl-native.tgz">mips64el-linux-musl-native.tgz</a>                     23-Nov-2021 04:47            88576226
+<a href="mips64el-linux-musln32-cross.tgz">mips64el-linux-musln32-cross.tgz</a>                   23-Nov-2021 04:38           102504666
+<a href="mips64el-linux-musln32-native.tgz">mips64el-linux-musln32-native.tgz</a>                  23-Nov-2021 04:47            85078437
+<a href="mips64el-linux-musln32sf-cross.tgz">mips64el-linux-musln32sf-cross.tgz</a>                 23-Nov-2021 04:38           102681068
+<a href="mips64el-linux-musln32sf-native.tgz">mips64el-linux-musln32sf-native.tgz</a>                23-Nov-2021 04:47            85183347
+<a href="mipsel-linux-musl-cross.tgz">mipsel-linux-musl-cross.tgz</a>                        23-Nov-2021 04:39           101686600
+<a href="mipsel-linux-musl-native.tgz">mipsel-linux-musl-native.tgz</a>                       23-Nov-2021 04:47            88905705
+<a href="mipsel-linux-musln32-cross.tgz">mipsel-linux-musln32-cross.tgz</a>                     23-Nov-2021 04:39           101687369
+<a href="mipsel-linux-musln32-native.tgz">mipsel-linux-musln32-native.tgz</a>                    23-Nov-2021 04:48            88916236
+<a href="mipsel-linux-musln32sf-cross.tgz">mipsel-linux-musln32sf-cross.tgz</a>                   23-Nov-2021 04:39           102025608
+<a href="mipsel-linux-musln32sf-native.tgz">mipsel-linux-musln32sf-native.tgz</a>                  23-Nov-2021 04:48            89430111
+<a href="mipsel-linux-muslsf-cross.tgz">mipsel-linux-muslsf-cross.tgz</a>                      23-Nov-2021 04:39           101924710
+<a href="mipsel-linux-muslsf-native.tgz">mipsel-linux-muslsf-native.tgz</a>                     23-Nov-2021 04:48            89417428
+<a href="or1k-linux-musl-cross.tgz">or1k-linux-musl-cross.tgz</a>                          23-Nov-2021 04:39            89536280
+<a href="or1k-linux-musl-native.tgz">or1k-linux-musl-native.tgz</a>                         23-Nov-2021 04:48            79807514
+<a href="powerpc-linux-musl-cross.tgz">powerpc-linux-musl-cross.tgz</a>                       23-Nov-2021 04:39           104447543
+<a href="powerpc-linux-musl-native.tgz">powerpc-linux-musl-native.tgz</a>                      23-Nov-2021 04:48            92571103
+<a href="powerpc-linux-muslsf-cross.tgz">powerpc-linux-muslsf-cross.tgz</a>                     23-Nov-2021 04:39           104769316
+<a href="powerpc-linux-muslsf-native.tgz">powerpc-linux-muslsf-native.tgz</a>                    23-Nov-2021 04:48            92945351
+<a href="powerpc64-linux-musl-cross.tgz">powerpc64-linux-musl-cross.tgz</a>                     23-Nov-2021 04:40           108561976
+<a href="powerpc64-linux-musl-native.tgz">powerpc64-linux-musl-native.tgz</a>                    23-Nov-2021 04:49            94929190
+<a href="powerpc64le-linux-musl-cross.tgz">powerpc64le-linux-musl-cross.tgz</a>                   23-Nov-2021 04:40           107101732
+<a href="powerpc64le-linux-musl-native.tgz">powerpc64le-linux-musl-native.tgz</a>                  23-Nov-2021 04:49            94676436
+<a href="powerpcle-linux-musl-cross.tgz">powerpcle-linux-musl-cross.tgz</a>                     23-Nov-2021 04:40           103346325
+<a href="powerpcle-linux-musl-native.tgz">powerpcle-linux-musl-native.tgz</a>                    23-Nov-2021 04:49            92908420
+<a href="powerpcle-linux-muslsf-cross.tgz">powerpcle-linux-muslsf-cross.tgz</a>                   23-Nov-2021 04:40           103677017
+<a href="powerpcle-linux-muslsf-native.tgz">powerpcle-linux-muslsf-native.tgz</a>                  23-Nov-2021 04:49            93237076
+<a href="riscv32-linux-musl-cross.tgz">riscv32-linux-musl-cross.tgz</a>                       23-Nov-2021 04:40           104943190
+<a href="riscv32-linux-musl-native.tgz">riscv32-linux-musl-native.tgz</a>                      23-Nov-2021 04:49            74830380
+<a href="riscv64-linux-musl-cross.tgz">riscv64-linux-musl-cross.tgz</a>                       23-Nov-2021 04:41           108069067
+<a href="riscv64-linux-musl-native.tgz">riscv64-linux-musl-native.tgz</a>                      23-Nov-2021 04:49            73802989
+<a href="s390x-linux-musl-cross.tgz">s390x-linux-musl-cross.tgz</a>                         23-Nov-2021 04:41           100597838
+<a href="s390x-linux-musl-native.tgz">s390x-linux-musl-native.tgz</a>                        23-Nov-2021 04:49            79077153
+<a href="sh2-linux-musl-cross.tgz">sh2-linux-musl-cross.tgz</a>                           23-Nov-2021 04:41            90466387
+<a href="sh2-linux-musl-native.tgz">sh2-linux-musl-native.tgz</a>                          23-Nov-2021 04:50            77025210
+<a href="sh2-linux-muslfdpic-cross.tgz">sh2-linux-muslfdpic-cross.tgz</a>                      23-Nov-2021 04:41            90591810
+<a href="sh2-linux-muslfdpic-native.tgz">sh2-linux-muslfdpic-native.tgz</a>                     23-Nov-2021 04:50            84547239
+<a href="sh2eb-linux-musl-cross.tgz">sh2eb-linux-musl-cross.tgz</a>                         23-Nov-2021 04:41            91125392
+<a href="sh2eb-linux-musl-native.tgz">sh2eb-linux-musl-native.tgz</a>                        23-Nov-2021 04:50            77890273
+<a href="sh2eb-linux-muslfdpic-cross.tgz">sh2eb-linux-muslfdpic-cross.tgz</a>                    23-Nov-2021 04:41            91249162
+<a href="sh2eb-linux-muslfdpic-native.tgz">sh2eb-linux-muslfdpic-native.tgz</a>                   23-Nov-2021 04:50            85937566
+<a href="sh4-linux-musl-cross.tgz">sh4-linux-musl-cross.tgz</a>                           23-Nov-2021 04:42            90411456
+<a href="sh4-linux-musl-native.tgz">sh4-linux-musl-native.tgz</a>                          23-Nov-2021 04:50            77104595
+<a href="sh4eb-linux-musl-cross.tgz">sh4eb-linux-musl-cross.tgz</a>                         23-Nov-2021 04:42            91071805
+<a href="sh4eb-linux-musl-native.tgz">sh4eb-linux-musl-native.tgz</a>                        23-Nov-2021 04:50            77887755
+<a href="x86_64-linux-musl-cross.tgz">x86_64-linux-musl-cross.tgz</a>                        23-Nov-2021 04:42           115063639
+<a href="x86_64-linux-musl-native.tgz">x86_64-linux-musl-native.tgz</a>                       23-Nov-2021 04:50            89080066
+<a href="x86_64-linux-muslx32-cross.tgz">x86_64-linux-muslx32-cross.tgz</a>                     23-Nov-2021 04:42           113789639
+<a href="x86_64-linux-muslx32-native.tgz">x86_64-linux-muslx32-native.tgz</a>                    23-Nov-2021 04:50            89243021
+<a href="x86_64-w64-mingw32-cross.tgz">x86_64-w64-mingw32-cross.tgz</a>                       06-Feb-2023 19:42           129885644
+<a href="x86_64-w64-mingw32-native.zip">x86_64-w64-mingw32-native.zip</a>                      06-Feb-2023 19:43           104276486
+</pre><hr></body>
+</html>
+<p>
+<strong>Bugs discovered</strong>:
+<br/><br/>
+This effort has led to the discovery of several compiler bugs:
+<ul>
+<li>GCC [<a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=87438">87438</a>]: Internal Compiler Error (ICE) building <em>gfortran</em> for MicroBlaze.</li>
+<li>GCC [<a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=89012">89012</a>]: Bad code generation targeting SuperH (SH-2 FDPIC).</li>
+</ul>
+Bugs in software found by using these toolchains not shown.
+</p>
+
+<p>
+<a id="issues"></a>
+<strong>Known issues</strong>:
+<ol type="a">
+<li>Fortran support is missing from <em>microblaze{,el}</em> cross- and native- toolchains due to an aforementioned bug.</li>
+<li>Native SH-2 FDPIC toolchains need to be built with <code>-freorder-blocks-algorithm=simple</code> due to an aforementioned bug.</li>
+<li>OpenRISC target: GCC 8 patched forward from <code>gcc-8_2_0-release</code> to <code>45d0f2</code> from <a href="https://github.com/mithro/gcc/tree/or1k-port-2">here</a> (thanks <em>smaeul</em>). GCC 9 includes it.</li>
+<li>[meta] Alpine Linux <a href="https://bugs.alpinelinux.org/issues/10478">breaks packages between upgrades</a>. Nginx + Lua (for curl support) was broken for a while, sorry.</li>
+</ol>
+</p>
+
+<p>
+<strong>Other notes</strong>:
+<ol>
+<li>Hashes and cryptographic signatures<a href="#refs"><sup>3</sup></a> are provided -- <a href="https://musl.cc/">use HTTPS for greater security</a>.</li>
+<li>Versions may be bumped up or down <em>without notice</em> if bugs are discovered.</li>
+<li>You should pin and reproduce <em>any</em> version of these toolchains yourself -- <strong>old binaries might not be archived</strong>. Don't trust random third-party binaries :)</li>
+<li>Build logs are <em>not</em> provided as toolchains are easily reproduced.</li>
+<li>Looking for <strong>i686-hosted</strong> cross compilers to <strong>target Win32</strong>? You're in luck:
+    <a href="i686-w64-mingw32-cross.tgz">i686</a>/<a href="i686-w64-mingw32-cross.tgz.sig">sig</a> and
+    <a href="x86_64-w64-mingw32-cross.tgz">x86_64</a>/<a href="x86_64-w64-mingw32-cross.tgz.sig">sig</a> (built with
+    <a href="https://git.zv.io/toolchains/mingw-cross-make">this</a>).
+</li>
+<li><strong>Native i686- and x86_64- Win32 toolchains</strong>. Packaged as <code>.zip</code> for convenience:
+    <a href="i686-w64-mingw32-native.zip">i686</a>/<a href="i686-w64-mingw32-native.zip.sig">sig</a> and
+    <a href="x86_64-w64-mingw32-native.zip">x86_64</a>/<a href="x86_64-w64-mingw32-native.zip.sig">sig</a> (built with
+    <a href="https://git.zv.io/toolchains/mingw-cross-make">this</a>).
+</li>
+<li>If you encounter issues or want to request additional architectures, <a href="https://zv.io/contact">let me know</a></li>
+</ol>
+You may also be interested in <a href="https://github.com/landley/mkroot"><em>mkroot</em></a>, a QEMU-based rootfs and kernel builder.
+</p>
+
+<!-- waste of space?
+<p>
+The <em>curl-friendly</em> version of this site is powered by <em>Nginx</em> + <em>Lua</em>:
+<pre>
+    location ~ ^/$ {
+        # for the curlers
+        if ($http_user_agent ~* (curl)) {
+            content_by_lua_block {
+                ...
+            }
+        }
+        # everyone else
+        ...
+    }
+</pre>
+Again, no guarantees as to the continued availability of specific toolchains.
+</p>
+-->
+
+<p>
+<a id="refs"></a>
+<strong>References</strong>:<br/><br/>
+[1]: Toolchains are built using <a href="https://www.adelielinux.org/">Ad&eacute;lie Linux</a> via <a href="https://git.zv.io/xstatic/mcm">these scripts</a>. You can also use <a href="https://git.zv.io/toolchains/bootstrap/">this platform-agnostic script</a>.<br/>
+[2]: Docker images based on the Alpine Linux image for size. Packaged with <a href="https://git.zv.io/d/macromu">MacroM&mu;</a>. x86_64-hosted images no longer updated.<br/>
+[3]: Validate binaries against <a href="https://zv.io/BE4BF7E6811C5BA41345C11EB1D0B4566FBBDB40.asc">my public key</a>.<br/>
+[4]: Clang/LLVM is on the TODO list. Contributions welcome. Look at <a href="http://ellcc.org/">ELLCC</a> in the interim.<br/>
+</p>

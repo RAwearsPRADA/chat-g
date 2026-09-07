@@ -1,0 +1,16 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE \"Message\" AS m\n            SET \"isRead\" = true\n            FROM (\n                SELECT \n                    unnest($1::integer[]) AS c_id,\n                    unnest($2::integer[]) AS u_id,\n                    unnest($3::bigint[]) AS read_ts\n            ) AS data\n            WHERE m.\"conversationId\" = data.c_id \n              AND m.\"senderId\" != data.u_id    \n              AND m.\"isRead\" = false           \n              AND m.\"createdAt\" <= data.read_ts    \n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int4Array",
+        "Int4Array",
+        "Int8Array"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "4cdc50ce8ffd20c28fdd89f9f7a7751ff42d8c69ba8fdeebdcac3f629164d3a1"
+}

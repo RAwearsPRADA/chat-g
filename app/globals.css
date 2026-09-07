@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&display=swap');
+@import "tailwindcss";
+
+
+
+@theme {
+  --animate-typing: TypingAnimation 0.5s ease infinite;
+  --animate-rightbar-out: RightbarMoveOut .25s ease-in-out forwards;
+  --animate-header-shadow: HeaderShadowAnimation 2s ease-in forwards infinite;
+}
+
+@keyframes TypingAnimation {
+  0%, 100% {
+      opacity: 0.4;
+      transform: scale(0.8);
+  }
+  50% {
+      opacity: 1;
+      transform: scale(1.2);
+  }
+}
+
+@keyframes RightbarMoveOut {
+  0% {
+      opacity: 0;
+      right: -300px;
+  }
+  100% {
+      opacity: 1;
+      right: 0px;
+  }
+}
+
+
+
+@utility chatbox-body {
+  @apply absolute flex-col items-center w-full sm:w-[calc(100vw-300px)] h-[calc(100vh-100px)] top-25 left-0 sm:left-75
+}
+
+@utility chatbox-messages-container {
+  @apply flex flex-col gap-y-3.75 w-full h-[calc(100%-100px)] p-3.75 overflow-x-hidden overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-[rgb(136,136,136)] [&::-webkit-scrollbar-thumb]:rounded-[3px] text-[18px]
+}
+
+@utility typing-dot {
+  @apply relative w-[3.5px] aspect-square rounded-full bg-[#6790ff] animate-typing
+}
+
+@utility rightbar-move-out {
+  animation: var(--animate-rightbar-out);
+}
+
+
+@utility user-online {
+  @apply after:block after:absolute after:content-[''] after:aspect-square after:right-1.25 after:bottom-1.25 after:w-2.5 after:rounded-full after:bg-linear-to-b after:from-[#5eff74] after:to-[#064b00]
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #ededed;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+  overflow: hidden;
+}

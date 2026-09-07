@@ -1,0 +1,29 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+    <!-- Тёмно-серый фон -->
+    <rect width="256" height="256" rx="56" fill="#1e1e1e" />
+    
+    <!-- Волна звука (3 дуги) -->
+    <path d="M80 100 Q96 70, 112 100 T144 100 T176 100" 
+          stroke="#2d2d2d" stroke-width="4" fill="none" opacity="0.6"/>
+    <path d="M88 120 Q104 90, 120 120 T152 120 T184 120" 
+          stroke="#2d2d2d" stroke-width="4" fill="none" opacity="0.4"/>
+    <path d="M96 140 Q112 110, 128 140 T160 140 T192 140" 
+          stroke="#2d2d2d" stroke-width="4" fill="none" opacity="0.2"/>
+    
+    <!-- Буква G (центр) -->
+    <path d="M108 160 
+             Q92 160, 92 180 
+             Q92 200, 108 200 
+             Q120 200, 128 192 
+             L134 200 
+             Q120 214, 104 214 
+             Q80 214, 80 180 
+             Q80 146, 104 146 
+             Q128 146, 144 160 
+             L138 168 
+             Q128 158, 116 158 Z" 
+          fill="#5d8aa8" />
+    
+    <!-- Точка — как микрофон/статус онлайн -->
+    <circle cx="192" cy="76" r="6" fill="#5d8aa8" />
+  </svg>

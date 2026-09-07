@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE \"ConversationParticipant\" AS p\n            SET \"lastMessageIsRead\" = true\n            FROM (\n                SELECT \n                    unnest($1::integer[]) AS c_id,\n                    unnest($2::bigint[]) AS read_ts -- $2 ссылается на второй переданный аргумент (&timestamps)\n            ) AS data\n            WHERE p.\"conversationId\" = data.c_id \n              AND p.\"lastMessageTime\" <= data.read_ts\n              AND p.\"lastMessageIsRead\" = false\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int4Array",
+        "Int8Array"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "42a3f93227a9a7c9c068415f36992cf43d4984e57b2f12ccfa7439343f643f14"
+}
