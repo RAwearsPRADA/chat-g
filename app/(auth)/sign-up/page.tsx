@@ -1,6 +1,5 @@
 'use client'
 
-import './styles.css'
 import  { useState } from 'react'
 import Link from 'next/link'
 import type {RegReturnType} from '../../api/reg/route'
@@ -45,8 +44,9 @@ export default function Page() {
 
     return(
         <>
-            <div className="page__inner">
-                <form action="" id="sign-up"
+            <div className="flex flex-col items-center justify-center gap-y-7.5 h-screen 
+                bg-[linear-gradient(45deg,#000,#272727,#8a8a8a,#fff)] bg-size-[300%_300%] animate-background">
+                <form action="" className='grid place-items-center gap-y-3.75' id=""
                 onKeyDown={(event: React.KeyboardEvent) => {
                     if (event.key === 'Enter'){ 
                         const error = validateData(nick, email, password)
@@ -60,38 +60,38 @@ export default function Page() {
                     }
                     }}
                 >
-                    <label htmlFor="name" title='Name'>Nick</label>
+                    <label className='cursor-pointer animate-text-animation' htmlFor="name" title='Name'>Nick</label>
                     {errorType === 'space in name' &&
                         <p className="error-message">Name has not to contain any spaces</p>
                     }
                     {(errorType === 'name' || errorType === 'name length') && 
                         <p className="error-message">{error}</p>
                     }
-                    <input type="text" id="name" value={nick} onChange={(event) => {
+                    <input className='border border-white rounded-[5px] animate-text-animation p-0.5 px-1.25' type="text" id="name" value={nick} onChange={(event) => {
                         setNick(event.target.value)
                     }}/>
-                    <label htmlFor="email" title='Email'>Email</label>
+                    <label className='cursor-pointer animate-text-animation' htmlFor="email" title='Email'>Email</label>
                     {errorType === 'email' &&
                         <p className="error-message">{error}</p>
                     }
-                    <input type="text" id="email" value={email} onChange={(event) => {
+                    <input className='border border-white rounded-[5px] animate-text-animation p-0.5 px-1.25' type="text" id="email" value={email} onChange={(event) => {
                         setEmail(event.target.value)
                     }} />
-                    <label htmlFor="password" title='Password'>Password</label>
+                    <label className='cursor-pointer animate-text-animation' htmlFor="password" title='Password'>Password</label>
                     {errorType === 'password' &&
                         <p className="error-message">{error}</p>
                     }
-                    <input type="password" id="password" value={password} onChange={(event) => {
+                    <input className="border border-white rounded-[5px] animate-text-animation p-0.5 px-1.25 relative
+                    after:absolute after:content-['']" type="password" id="password" value={password} onChange={(event) => {
                         setPassword(event.target.value)
                     }}/>
-                    <button  type='button' disabled={isLoading} onClick={() => {
+                    <button className='cursor-pointer animate-text-animation'  type='button' disabled={isLoading} onClick={() => {
                         const error = validateData(nick, email, password)
-                        console.log(error)
                         if (!error)
                             regUser()
                         else setErrorType(error)
                     }}>Sign up</button>
-                    <Link href={'/log-in'}>Already has account? Sign in</Link>
+                    <Link href={'/log-in'}>Already has account? Log in</Link>
                 </form>
             </div>
         </>

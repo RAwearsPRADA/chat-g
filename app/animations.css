@@ -1,0 +1,92 @@
+@keyframes TypingAnimation {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+  }
+  
+@keyframes RightbarMoveOut {
+  0% {
+      opacity: 0;
+      right: -300px;
+  }
+  100% {
+      opacity: 1;
+      right: 0px;
+  }
+}
+
+@keyframes GradientFlicker {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes TextFlicker {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 0%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+@keyframes Shine {
+  0%   { background-position: 200% 0; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: -200% 0; }
+}
+
+
+@keyframes GradientFlicker {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes TextFlicker {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 0%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes BackgroundAnimation {
+    0% {
+     background-position: 0% 50%;
+    } 
+    50% {
+     background-position: 100% 100%;
+    }
+    100% {
+     background-position: 0% 50%;
+    }
+}
+
+@keyframes TextAnimation {
+    0% {
+        color: #fff;
+        border-color: #fff;
+    }
+    50% {
+        color: #272727;
+        border-color: #272727;
+    }
+    100% {
+        color: #fff;
+        border-color: #fff;
+    }
+}
